@@ -4,6 +4,10 @@ public class Subject {
     String name;
     int attended;
     int total;
+    public Subject()
+    {
+
+    }
     public Subject(String name,int attended,int total)
     {
         this.name=name;

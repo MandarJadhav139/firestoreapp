@@ -1,21 +1,45 @@
 package com.example.firestoreapp;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Student {
     String id;
     String name;
     String div;
-    Subject[] subjects;
+    ArrayList<Subject> subjects=new ArrayList<>();
 
-    Student(String id,String name,String div)
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDiv(String div) {
+        this.div = div;
+    }
+
+    public void setSubjects(ArrayList<Subject> subjects) {
+        this.subjects = subjects;
+    }
+
+    public Student()
     {
-        subjects[0]=new Subject("dbms",1,1);
-        subjects[1]=new Subject("cn",1,1);
-        subjects[2]=new Subject("toc",1,1);
-        subjects[3]=new Subject("sdl",1,1);
-        subjects[4]=new Subject("isee",1,1);
-        subjects[5]=new Subject("sepm",1,1);
+
+    }
+    public Student(String id,String name,String div)
+    {
+        subjects.add(new Subject("dbms",1,1));
+        subjects.add(new Subject("cn",1,1));
+        subjects.add(new Subject("toc",1,1));
+        subjects.add(new Subject("sdl",1,1));
+        subjects.add(new Subject("isee",1,1));
+        subjects.add(new Subject("sepm",1,1));
+        this.id=id;
+        this.name=name;
+        this.div=div;
 
 
     }
@@ -31,7 +55,7 @@ public class Student {
         return div;
     }
 
-    public Subject[] getSubjects() {
+    public ArrayList<Subject> getSubjects() {
         return subjects;
     }
 }
