@@ -16,10 +16,12 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> presentStudents;
     Context context ;
     LinearLayout linearLayout;
+    Subject subject;
 
 
 
@@ -54,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         "c2k17105591",
                         "c2k17105593"
                 ));
+        subject = new Subject("dbms");
 
         //students = new ArrayList<>();
 
@@ -80,7 +84,25 @@ public class MainActivity extends AppCompatActivity {
                     for(QueryDocumentSnapshot doc:queryDocumentSnapshots)
                     {
                         Student student = doc.toObject(Student.class);
-                        //student.setSubjects(doc.get);
+
+                        //updateAttendance(doc.getId());
+                        ArrayList<Subject> newsubjects=new ArrayList<>(student.getSubjects());
+                        //newsubjects= student.getSubjects();
+                        for(int i=0;i<newsubjects.size();i++)
+                        {
+                            Subject subject=newsubjects.get(i);
+                            if(subject.getName()==subject.getName())
+                            {
+                                newsubjects.get(i).attended++;
+                                newsubjects.get(i).total++;
+                            }
+                        }
+                        DocumentReference docref=studentCollection.document(doc.getId());
+                        student.setSubjects(newsubjects);
+
+                        docref.set(student, SetOptions.merge());
+
+                        //UI modification************************************************************************
                         Log.i("student info :","name: "+student.getName()+" div: "+student.getDiv());
                         TextView newTextView = new TextView(context);
                         newTextView.setGravity(Gravity.CENTER_VERTICAL);
@@ -94,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                         linearLayout.addView(newTextView);
                         linearLayout.addView(line);
+                        //****************************************************************************
                     }
                 }
             });
@@ -101,4 +124,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 }
