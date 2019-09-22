@@ -1,9 +1,16 @@
 package com.example.firestoreapp;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -28,10 +35,19 @@ public class MainActivity extends AppCompatActivity {
     CollectionReference studentCollection = db.collection("studentCollection");
     List<Student> students;
     ArrayList<String> presentStudents;
+    Context context ;
+    LinearLayout linearLayout;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
+        linearLayout=findViewById(R.id.linearLayout);
+
+
         presentStudents=new ArrayList<String>(
                 Arrays.asList(
                         "c2k17105589",
@@ -66,6 +82,18 @@ public class MainActivity extends AppCompatActivity {
                         Student student = doc.toObject(Student.class);
                         //student.setSubjects(doc.get);
                         Log.i("student info :","name: "+student.getName()+" div: "+student.getDiv());
+                        TextView newTextView = new TextView(context);
+                        newTextView.setGravity(Gravity.CENTER_VERTICAL);
+                        TextView line;
+                        line = new TextView(context);
+                        line.setHeight(3);
+                        line.setBackgroundColor(Color.parseColor("#000000"));
+                       // newTextView.setLayoutParams(lparams);
+                        newTextView.setText(student.getName());
+                        newTextView.setPadding(20,20,0,20);
+
+                        linearLayout.addView(newTextView);
+                        linearLayout.addView(line);
                     }
                 }
             });
