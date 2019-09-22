@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> presentStudents;
     Context context ;
     LinearLayout linearLayout;
-    Subject subject;
+    Subject passedSubject;
 
 
 
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
                         "c2k17105591",
                         "c2k17105593"
                 ));
-        subject = new Subject("dbms");
+        passedSubject = new Subject("dbms");
 
         //students = new ArrayList<>();
 
@@ -85,14 +85,16 @@ public class MainActivity extends AppCompatActivity {
                     {
                         Student student = doc.toObject(Student.class);
 
-                        //updateAttendance(doc.getId());
+
                         ArrayList<Subject> newsubjects=new ArrayList<>(student.getSubjects());
-                        //newsubjects= student.getSubjects();
+
                         for(int i=0;i<newsubjects.size();i++)
                         {
-                            Subject subject=newsubjects.get(i);
-                            if(subject.getName()==subject.getName())
+                            Log.i("subject",newsubjects.get(i).getName());
+
+                            if(newsubjects.get(i).getName().equals(passedSubject.getName()))
                             {
+
                                 newsubjects.get(i).attended++;
                                 newsubjects.get(i).total++;
                             }
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
                         line = new TextView(context);
                         line.setHeight(3);
                         line.setBackgroundColor(Color.parseColor("#000000"));
-                       // newTextView.setLayoutParams(lparams);
+
                         newTextView.setText(student.getName());
                         newTextView.setPadding(20,20,0,20);
 
@@ -120,7 +122,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
+
+
         }
+        
 
 
     }
